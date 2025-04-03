@@ -33,10 +33,10 @@ BattleFrontier_Lounge7_EventScript_ChooseLeftTutorMove::
 	case 3, BattleFrontier_Lounge7_EventScript_MegaPunch
 	case 4, BattleFrontier_Lounge7_EventScript_MegaKick
 	case 5, BattleFrontier_Lounge7_EventScript_BodySlam
-	case 6, BattleFrontier_Lounge7_EventScript_RockSlide
-	case 7, BattleFrontier_Lounge7_EventScript_Counter
-	case 8, BattleFrontier_Lounge7_EventScript_ThunderWave
-	case 9, BattleFrontier_Lounge7_EventScript_SwordsDance
+	case 6, BattleFrontier_Lounge7_EventScript_Counter
+	case 7, BattleFrontier_Lounge7_EventScript_FireFang
+	case 8, BattleFrontier_Lounge7_EventScript_IceFang
+	case 9, BattleFrontier_Lounge7_EventScript_ThunderFang
 	case 10, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
 	case MULTI_B_PRESSED, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
 	end
@@ -57,10 +57,10 @@ BattleFrontier_Lounge7_EventScript_ChooseNewLeftTutorMove::
 	case 3, BattleFrontier_Lounge7_EventScript_MegaPunch
 	case 4, BattleFrontier_Lounge7_EventScript_MegaKick
 	case 5, BattleFrontier_Lounge7_EventScript_BodySlam
-	case 6, BattleFrontier_Lounge7_EventScript_RockSlide
-	case 7, BattleFrontier_Lounge7_EventScript_Counter
-	case 8, BattleFrontier_Lounge7_EventScript_ThunderWave
-	case 9, BattleFrontier_Lounge7_EventScript_SwordsDance
+	case 6, BattleFrontier_Lounge7_EventScript_Counter
+	case 7, BattleFrontier_Lounge7_EventScript_FireFang
+	case 8, BattleFrontier_Lounge7_EventScript_IceFang
+	case 9, BattleFrontier_Lounge7_EventScript_ThunderFang
 	case 10, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
 	case MULTI_B_PRESSED, BattleFrontier_Lounge7_EventScript_ExitTutorMoveSelect
 	end
@@ -101,27 +101,27 @@ BattleFrontier_Lounge7_EventScript_BodySlam::
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
-BattleFrontier_Lounge7_EventScript_RockSlide::
-	setvar VAR_0x8008, 48
-	setvar VAR_0x8005, MOVE_ROCK_SLIDE
-	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
-	end
-
 BattleFrontier_Lounge7_EventScript_Counter::
 	setvar VAR_0x8008, 48
 	setvar VAR_0x8005, MOVE_COUNTER
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
-BattleFrontier_Lounge7_EventScript_ThunderWave::
+BattleFrontier_Lounge7_EventScript_FireFang::
 	setvar VAR_0x8008, 48
-	setvar VAR_0x8005, MOVE_THUNDER_WAVE
+	setvar VAR_0x8005, MOVE_FIRE_FANG
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
-BattleFrontier_Lounge7_EventScript_SwordsDance::
+BattleFrontier_Lounge7_EventScript_IceFang::
 	setvar VAR_0x8008, 48
-	setvar VAR_0x8005, MOVE_SWORDS_DANCE
+	setvar VAR_0x8005, MOVE_ICE_FANG
+	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
+	end
+
+BattleFrontier_Lounge7_EventScript_ThunderFang::
+	setvar VAR_0x8008, 48
+	setvar VAR_0x8005, MOVE_THUNDER_FANG
 	goto BattleFrontier_Lounge7_EventScript_ConfirmMoveSelection
 	end
 
@@ -424,25 +424,25 @@ BattleFrontier_Lounge7_Text_BodySlamDesc::
 	.string "that may cause\n"
 	.string "paralysis.$"
 
-BattleFrontier_Lounge7_Text_RockSlideDesc::
-	.string "Large boulders\n"
-	.string "are hurled. May\n"
-	.string "cause flinching.$"
-
 BattleFrontier_Lounge7_Text_CounterDesc::
 	.string "Retaliates any\n"
 	.string "physical hit with\n"
 	.string "double the power.$"
 
-BattleFrontier_Lounge7_Text_ThunderWaveDesc::
-	.string "A weak jolt of\n"
-	.string "electricity that\n"
-	.string "paralyzes the foe.$"
+BattleFrontier_Lounge7_Text_FireFangDesc::
+	.string "Bites the foe with\n"
+	.string "fiery fangs. May\n"
+	.string "burn or flinch.$"
 
-BattleFrontier_Lounge7_Text_SwordsDanceDesc::
-	.string "A fighting dance\n"
-	.string "that sharply\n"
-	.string "raises ATTACK.$"
+BattleFrontier_Lounge7_Text_IceFangDesc::
+	.string "Bites the foe with\n"
+	.string "icy fangs. May\n"
+	.string "freeze or flinch.$"
+
+BattleFrontier_Lounge7_Text_ThunderFangDesc::
+	.string "Bites the foe with\n"
+	.string "electric fangs.\n"
+	.string " May paralyze.$"
 
 BattleFrontier_Lounge7_Text_DefenseCurlDesc::
 	.string "Curls up to con-\n"

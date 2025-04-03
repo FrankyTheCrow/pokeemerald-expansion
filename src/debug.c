@@ -166,6 +166,8 @@ enum FlagsVarsDebugMenu
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_TRAINER_SEE,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE,
     DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_CATCHING,
+    DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FORCE_SHINY,
+    DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FORCE_UNSHINY,
 };
 
 enum BattleType
@@ -412,6 +414,8 @@ static void DebugAction_FlagsVars_EncounterOnOff(u8 taskId);
 static void DebugAction_FlagsVars_TrainerSeeOnOff(u8 taskId);
 static void DebugAction_FlagsVars_BagUseOnOff(u8 taskId);
 static void DebugAction_FlagsVars_CatchingOnOff(u8 taskId);
+static void DebugAction_FlagsVars_ShinyOnOff(u8 taskId);
+static void DebugAction_FlagsVars_UnshinyOnOff(u8 taskId);
 static void DebugAction_FlagsVars_RunningShoes(u8 taskId);
 
 static void Debug_InitializeBattle(u8 taskId);
@@ -649,6 +653,8 @@ static const struct ListMenuItem sDebugMenu_Items_FlagsVars[] =
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_TRAINER_SEE]   = {COMPOUND_STRING("Toggle {STR_VAR_1}Trainer See OFF"),        DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_TRAINER_SEE},
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE]       = {COMPOUND_STRING("Toggle {STR_VAR_1}Bag Use OFF"),            DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE},
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_CATCHING]      = {COMPOUND_STRING("Toggle {STR_VAR_1}Catching OFF"),           DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_CATCHING},
+    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FORCE_SHINY]   = {COMPOUND_STRING("Toggle {STR_VAR_1}Force Shiny OFF"),        DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FORCE_SHINY},
+    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FORCE_UNSHINY] = {COMPOUND_STRING("Toggle {STR_VAR_1}Force Unshiny OFF"),      DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FORCE_UNSHINY},
 };
 
 static const struct ListMenuItem sDebugMenu_Items_Battle_0[] =
@@ -822,6 +828,8 @@ static void (*const sDebugMenu_Actions_Flags[])(u8) =
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_TRAINER_SEE]   = DebugAction_FlagsVars_TrainerSeeOnOff,
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_BAG_USE]       = DebugAction_FlagsVars_BagUseOnOff,
     [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_CATCHING]      = DebugAction_FlagsVars_CatchingOnOff,
+    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FORCE_SHINY]   = DebugAction_FlagsVars_ShinyOnOff,
+    [DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FORCE_UNSHINY] = DebugAction_FlagsVars_UnshinyOnOff,
 };
 static void (*const sDebugMenu_Actions_Give[])(u8) =
 {
@@ -1236,6 +1244,16 @@ static u8 Debug_CheckToggleFlags(u8 id)
     #if B_FLAG_NO_CATCHING != 0
         case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_CATCHING:
             result = FlagGet(B_FLAG_NO_CATCHING);
+            break;
+    #endif
+    #if FLAG_FORCE_SHINY != 0
+        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FORCE_SHINY:
+            result = FlagGet(FLAG_FORCE_SHINY);
+            break;
+    #endif
+    #if FLAG_FORCE_UNSHINY != 0
+        case DEBUG_FLAGVAR_MENU_ITEM_TOGGLE_FORCE_UNSHINY:
+            result = FlagGet(FLAG_FORCE_UNSHINY);
             break;
     #endif
         default:
@@ -2597,6 +2615,32 @@ static void DebugAction_FlagsVars_CatchingOnOff(u8 taskId)
     else
         PlaySE(SE_PC_LOGIN);
     FlagToggle(B_FLAG_NO_CATCHING);
+#endif
+}
+
+static void DebugAction_FlagsVars_ShinyOnOff(u8 taskId)
+{
+#if FLAG_FORCE_SHINY == 0
+    Debug_DestroyMenu_Full_Script(taskId, Debug_FlagsNotSetBattleConfigMessage);
+#else
+    if (FlagGet(FLAG_FORCE_SHINY))
+        PlaySE(SE_PC_OFF);
+    else
+        PlaySE(SE_PC_LOGIN);
+    FlagToggle(FLAG_FORCE_SHINY);
+#endif
+}
+
+static void DebugAction_FlagsVars_UnshinyOnOff(u8 taskId)
+{
+#if FLAG_FORCE_UNSHINY == 0
+    Debug_DestroyMenu_Full_Script(taskId, Debug_FlagsNotSetBattleConfigMessage);
+#else
+    if (FlagGet(FLAG_FORCE_UNSHINY))
+        PlaySE(SE_PC_OFF);
+    else
+        PlaySE(SE_PC_LOGIN);
+    FlagToggle(FLAG_FORCE_UNSHINY);
 #endif
 }
 

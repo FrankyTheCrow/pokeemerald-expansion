@@ -154,6 +154,8 @@ SlateportCity_Pokemart_EnergyGuru:
 	.2byte ITEM_ZINC
 	.2byte ITEM_CALCIUM
 	.2byte ITEM_HP_UP
+	.2byte ITEM_PP_UP
+	.2byte ITEM_ABILITY_CAPSULE
 	pokemartlistend
 
 SlateportCity_EventScript_EffortRibbonWoman::
@@ -512,6 +514,8 @@ SlateportCity_PokemartDecor_Dolls:
 	.2byte DECOR_AZURILL_DOLL
 	.2byte DECOR_MARILL_DOLL
 	.2byte DECOR_SKITTY_DOLL
+	.2byte DECOR_SEEDOT_DOLL
+	.2byte DECOR_LOTAD_DOLL
 	pokemartlistend
 
 SlateportCity_EventScript_ComeBackWithSecretPower::
@@ -560,8 +564,36 @@ SlateportCity_EventScript_PowerTMClerk::
 
 	.align 2
 SlateportCity_Pokemart_PowerTMs:
-	.2byte ITEM_TM_HIDDEN_POWER
-	.2byte ITEM_TM_SECRET_POWER
+	.2byte ITEM_TM_LOW_SWEEP
+	.2byte ITEM_TM_ROOST
+	.2byte ITEM_TM_WILL_O_WISP
+	.2byte ITEM_TM_PAYBACK
+	.2byte ITEM_TM_THUNDER_WAVE
+	.2byte ITEM_TM_STEALTH_ROCK
+	.2byte ITEM_TM_BULLDOZE
+	.2byte ITEM_TM_GRASS_KNOT
+	.2byte ITEM_TM_AIR_SLASH
+	pokemartlistend
+
+SlateportCity_EventScript_PokeballClerk::
+	lock
+	faceplayer
+	message gText_HowMayIServeYou
+	waitmessage
+	pokemart SlateportCity_Pokemart_Pokeballs
+	msgbox gText_PleaseComeAgain, MSGBOX_DEFAULT
+	release
+	end
+
+	.align 2
+SlateportCity_Pokemart_Pokeballs:
+	.2byte ITEM_FAST_BALL
+	.2byte ITEM_LEVEL_BALL
+	.2byte ITEM_LURE_BALL
+	.2byte ITEM_HEAVY_BALL
+	.2byte ITEM_LOVE_BALL
+	.2byte ITEM_FRIEND_BALL
+	.2byte ITEM_MOON_BALL
 	pokemartlistend
 
 @ Scene with Capt Sterns interview and Team Aqua announcing plans to steal Submarine

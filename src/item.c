@@ -425,7 +425,7 @@ static s32 FindFreePCItemSlot(void)
 
     for (i = 0; i < PC_ITEMS_COUNT; i++)
     {
-        if (gSaveBlock1Ptr->pcItems[i].itemId == ITEM_NONE)
+        if (gSaveBlock3Ptr->pcItems[i].itemId == ITEM_NONE)
             return i;
     }
     return -1;
@@ -438,7 +438,7 @@ u8 CountUsedPCItemSlots(void)
 
     for (i = 0; i < PC_ITEMS_COUNT; i++)
     {
-        if (gSaveBlock1Ptr->pcItems[i].itemId != ITEM_NONE)
+        if (gSaveBlock3Ptr->pcItems[i].itemId != ITEM_NONE)
             usedSlots++;
     }
     return usedSlots;
@@ -450,7 +450,7 @@ bool8 CheckPCHasItem(u16 itemId, u16 count)
 
     for (i = 0; i < PC_ITEMS_COUNT; i++)
     {
-        if (gSaveBlock1Ptr->pcItems[i].itemId == itemId && GetPCItemQuantity(&gSaveBlock1Ptr->pcItems[i].quantity) >= count)
+        if (gSaveBlock3Ptr->pcItems[i].itemId == itemId && GetPCItemQuantity(&gSaveBlock3Ptr->pcItems[i].quantity) >= count)
             return TRUE;
     }
     return FALSE;
@@ -464,8 +464,8 @@ bool8 AddPCItem(u16 itemId, u16 count)
     struct ItemSlot *newItems;
 
     // Copy PC items
-    newItems = AllocZeroed(sizeof(gSaveBlock1Ptr->pcItems));
-    memcpy(newItems, gSaveBlock1Ptr->pcItems, sizeof(gSaveBlock1Ptr->pcItems));
+    newItems = AllocZeroed(sizeof(gSaveBlock3Ptr->pcItems));
+    memcpy(newItems, gSaveBlock3Ptr->pcItems, sizeof(gSaveBlock3Ptr->pcItems));
 
     // Use any item slots that already contain this item
     for (i = 0; i < PC_ITEMS_COUNT; i++)
@@ -476,7 +476,7 @@ bool8 AddPCItem(u16 itemId, u16 count)
             if (ownedCount + count <= MAX_PC_ITEM_CAPACITY)
             {
                 SetPCItemQuantity(&newItems[i].quantity, ownedCount + count);
-                memcpy(gSaveBlock1Ptr->pcItems, newItems, sizeof(gSaveBlock1Ptr->pcItems));
+                memcpy(gSaveBlock3Ptr->pcItems, newItems, sizeof(gSaveBlock3Ptr->pcItems));
                 Free(newItems);
                 return TRUE;
             }
@@ -484,7 +484,7 @@ bool8 AddPCItem(u16 itemId, u16 count)
             SetPCItemQuantity(&newItems[i].quantity, MAX_PC_ITEM_CAPACITY);
             if (count == 0)
             {
-                memcpy(gSaveBlock1Ptr->pcItems, newItems, sizeof(gSaveBlock1Ptr->pcItems));
+                memcpy(gSaveBlock3Ptr->pcItems, newItems, sizeof(gSaveBlock3Ptr->pcItems));
                 Free(newItems);
                 return TRUE;
             }
@@ -508,17 +508,17 @@ bool8 AddPCItem(u16 itemId, u16 count)
     }
 
     // Copy items back to the PC
-    memcpy(gSaveBlock1Ptr->pcItems, newItems, sizeof(gSaveBlock1Ptr->pcItems));
+    memcpy(gSaveBlock3Ptr->pcItems, newItems, sizeof(gSaveBlock3Ptr->pcItems));
     Free(newItems);
     return TRUE;
 }
 
 void RemovePCItem(u8 index, u16 count)
 {
-    gSaveBlock1Ptr->pcItems[index].quantity -= count;
-    if (gSaveBlock1Ptr->pcItems[index].quantity == 0)
+    gSaveBlock3Ptr->pcItems[index].quantity -= count;
+    if (gSaveBlock3Ptr->pcItems[index].quantity == 0)
     {
-        gSaveBlock1Ptr->pcItems[index].itemId = ITEM_NONE;
+        gSaveBlock3Ptr->pcItems[index].itemId = ITEM_NONE;
         CompactPCItems();
     }
 }
@@ -532,11 +532,11 @@ void CompactPCItems(void)
     {
         for (j = i + 1; j < PC_ITEMS_COUNT; j++)
         {
-            if (gSaveBlock1Ptr->pcItems[i].itemId == 0)
+            if (gSaveBlock3Ptr->pcItems[i].itemId == 0)
             {
-                struct ItemSlot temp = gSaveBlock1Ptr->pcItems[i];
-                gSaveBlock1Ptr->pcItems[i] = gSaveBlock1Ptr->pcItems[j];
-                gSaveBlock1Ptr->pcItems[j] = temp;
+                struct ItemSlot temp = gSaveBlock3Ptr->pcItems[i];
+                gSaveBlock3Ptr->pcItems[i] = gSaveBlock3Ptr->pcItems[j];
+                gSaveBlock3Ptr->pcItems[j] = temp;
             }
         }
     }

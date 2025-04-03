@@ -4,7 +4,7 @@ FallarborTown_CozmosHouse_MapScripts::
 FallarborTown_CozmosHouse_EventScript_ProfCozmo::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM_RETURN, FallarborTown_CozmosHouse_EventScript_GaveMeteorite
+	goto_if_set FLAG_RECEIVED_TM_DAZZLING_GLEAM, FallarborTown_CozmosHouse_EventScript_GaveMeteorite
 	checkitem ITEM_METEORITE
 	goto_if_eq VAR_RESULT, TRUE, FallarborTown_CozmosHouse_EventScript_PlayerHasMeteorite
 	msgbox FallarborTown_CozmosHouse_Text_MeteoriteWillNeverBeMineNow, MSGBOX_DEFAULT
@@ -16,11 +16,11 @@ FallarborTown_CozmosHouse_EventScript_PlayerHasMeteorite::
 	call_if_set FLAG_TEMP_2, FallarborTown_CozmosHouse_EventScript_AskForMeteorite
 	goto_if_eq VAR_RESULT, NO, FallarborTown_CozmosHouse_EventScript_DeclineGiveMeteorite
 	msgbox FallarborTown_CozmosHouse_Text_PleaseUseThisTM, MSGBOX_DEFAULT
-	giveitem ITEM_TM_RETURN
+	giveitem ITEM_TM_DAZZLING_GLEAM
 	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
 	setvar VAR_0x8004, ITEM_METEORITE
 	call Common_EventScript_PlayerHandedOverTheItem
-	setflag FLAG_RECEIVED_TM_RETURN
+	setflag FLAG_RECEIVED_TM_DAZZLING_GLEAM
 	msgbox FallarborTown_CozmosHouse_Text_ReallyGoingToHelpMyResearch, MSGBOX_DEFAULT
 	release
 	end
@@ -41,6 +41,7 @@ FallarborTown_CozmosHouse_EventScript_DeclineGiveMeteorite::
 	end
 
 FallarborTown_CozmosHouse_EventScript_GaveMeteorite::
+	goto_if_set FLAG_SYS_GAME_CLEAR, FallarborTown_CozmosHouse_EventScript_GiveTicket
 	msgbox FallarborTown_CozmosHouse_Text_ReallyGoingToHelpMyResearch, MSGBOX_DEFAULT
 	release
 	end
@@ -48,7 +49,7 @@ FallarborTown_CozmosHouse_EventScript_GaveMeteorite::
 FallarborTown_CozmosHouse_EventScript_CozmosWife::
 	lock
 	faceplayer
-	goto_if_set FLAG_RECEIVED_TM_RETURN, FallarborTown_CozmosHouse_EventScript_CozmoIsHappy
+	goto_if_set FLAG_RECEIVED_TM_DAZZLING_GLEAM, FallarborTown_CozmosHouse_EventScript_CozmoIsHappy
 	goto_if_set FLAG_DEFEATED_EVIL_TEAM_MT_CHIMNEY, FallarborTown_CozmosHouse_EventScript_CozmoIsSad
 	msgbox FallarborTown_CozmosHouse_Text_CozmoWentToMeteorFalls, MSGBOX_DEFAULT
 	release
@@ -61,6 +62,23 @@ FallarborTown_CozmosHouse_EventScript_CozmoIsSad::
 
 FallarborTown_CozmosHouse_EventScript_CozmoIsHappy::
 	msgbox FallarborTown_CozmosHouse_Text_CozmoIsSoHappy, MSGBOX_DEFAULT
+	release
+	end
+
+
+FallarborTown_CozmosHouse_EventScript_GiveTicket::
+	goto_if_set FLAG_RECEIVED_AURORA_TICKET, FallarborTown_CozmosHouse_EventScript_TicketAlreadyGiven
+	msgbox FallarborTown_CozmosHouse_Text_HelpedMeOut, MSGBOX_DEFAULT
+	giveitem ITEM_AURORA_TICKET
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	msgbox FallarborTown_CozmosHouse_Text_TakeTheLilycoveFerry, MSGBOX_DEFAULT
+	setflag FLAG_RECEIVED_AURORA_TICKET
+	setflag FLAG_ENABLE_SHIP_BIRTH_ISLAND
+	release
+	end
+
+FallarborTown_CozmosHouse_EventScript_TicketAlreadyGiven::
+	msgbox FallarborTown_CozmosHouse_Text_ThankYouSoMuch, MSGBOX_DEFAULT
 	release
 	end
 
@@ -116,3 +134,24 @@ FallarborTown_CozmosHouse_Text_CozmoIsSoHappy:
 	.string "Look at PROF. COZMO…\n"
 	.string "He's so happy! I think it's cute.$"
 
+FallarborTown_CozmosHouse_Text_HelpedMeOut:
+	.string "PROF. COZMO: Oh, {PLAYER}{KUN}!\n"
+	.string "I'm so glad to see you!\p"
+	.string "You see, you've done so much to help\n"
+	.string "me out that I've decided to give you\l"
+	.string "something special.$"
+
+FallarborTown_CozmosHouse_Text_TakeTheLilycoveFerry:
+	.string "PROF. COZMO: There's a mysterious\n"
+	.string "island far out in the sea.\p"
+	.string "I intended to visit it as a research\n"
+	.string "trip, but I imagine you'd be far\l"
+	.string "more interested in what's there.\p"
+	.string "Perhaps the ferry in LILYCOVE CITY\n"
+	.string "can take you?$"
+
+FallarborTown_CozmosHouse_Text_ThankYouSoMuch:
+	.string "PROF. COZMO: Thank you again for\n"
+	.string "everything you've done for me.\p"
+	.string "My research has been moving ahead by\n"
+	.string "leaps and bounds!$"

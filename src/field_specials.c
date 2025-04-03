@@ -2537,10 +2537,10 @@ static const u8 *const sScrollableMultichoiceOptions[][MAX_SCROLL_MULTI_LENGTH] 
         COMPOUND_STRING("MEGA PUNCH{CLEAR_TO 0x4E}24BP"),
         COMPOUND_STRING("MEGA KICK{CLEAR_TO 0x4E}48BP"),
         COMPOUND_STRING("BODY SLAM{CLEAR_TO 0x4E}48BP"),
-        COMPOUND_STRING("ROCK SLIDE{CLEAR_TO 0x4E}48BP"),
         COMPOUND_STRING("COUNTER{CLEAR_TO 0x4E}48BP"),
-        COMPOUND_STRING("THUNDER WAVE{CLEAR_TO 0x4E}48BP"),
-        COMPOUND_STRING("SWORDS DANCE{CLEAR_TO 0x4E}48BP"),
+        COMPOUND_STRING("FIRE FANG{CLEAR_TO 0x4E}48BP"),
+        COMPOUND_STRING("ICE FANG{CLEAR_TO 0x4E}48BP"),
+        COMPOUND_STRING("THUNDER FANG{CLEAR_TO 0x4E}48BP"),
         gText_Exit
     },
     [SCROLL_MULTI_BF_MOVE_TUTOR_2] =
@@ -3106,10 +3106,10 @@ static void ShowBattleFrontierTutorMoveDescription(u8 menu, u16 selection)
         BattleFrontier_Lounge7_Text_MegaPunchDesc,
         BattleFrontier_Lounge7_Text_MegaKickDesc,
         BattleFrontier_Lounge7_Text_BodySlamDesc,
-        BattleFrontier_Lounge7_Text_RockSlideDesc,
         BattleFrontier_Lounge7_Text_CounterDesc,
-        BattleFrontier_Lounge7_Text_ThunderWaveDesc,
-        BattleFrontier_Lounge7_Text_SwordsDanceDesc,
+        BattleFrontier_Lounge7_Text_FireFangDesc,
+        BattleFrontier_Lounge7_Text_IceFangDesc,
+        BattleFrontier_Lounge7_Text_ThunderFangDesc,
         gText_Exit,
     };
 

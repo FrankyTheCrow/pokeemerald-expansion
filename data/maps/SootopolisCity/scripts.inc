@@ -15,6 +15,7 @@
 .set LOCALID_MAXIE, 16
 .set LOCALID_ARCHIE, 17
 .set LOCALID_WALLACE, 18
+.set LOCALID_RIVAL, 19
 
 SootopolisCity_MapScripts::
 	map_script MAP_SCRIPT_ON_LOAD, SootopolisCity_OnLoad
@@ -65,6 +66,7 @@ SootopolisCity_OnTransition:
 	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 4, SootopolisCity_EventScript_SetExitCaveOfOriginObjPos
 	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 5, SootopolisCity_EventScript_SetOutsideGymObjPos
 	call_if_eq VAR_SOOTOPOLIS_CITY_STATE, 6, SootopolisCity_EventScript_SetExpertBlockCaveEntrance
+	call Common_EventScript_SetupRivalGfxId
 	end
 
 SootopolisCity_EventScript_HideMapNamePopup::
@@ -155,7 +157,7 @@ SootopolisCity_EventScript_SetWallaceLeft::
 	return
 
 SootopolisCity_EventScript_SetExpertBlockCaveEntrance::
-	setobjectxyperm LOCALID_EXPERT, 31, 18
+	setobjectxyperm LOCALID_EXPERT, 29, 19
 	return
 
 SootopolisCity_OnWarp:
@@ -1395,6 +1397,107 @@ SootopolisCity_EventScript_MaxieArchieLeave::
 	releaseall
 	end
 
+SootopolisCity_EventScript_RivalGreeting::
+	lockall
+	applymovement LOCALID_RIVAL, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox SootopolisCity_EventScript_RivalGoodToSeeYou, MSGBOX_DEFAULT
+	applymovement LOCALID_RIVAL, Common_Movement_WalkInPlaceFasterUp
+	waitmovement 0
+	msgbox SootopolisCity_EventScript_RivalLotHasHappened, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_RIVAL, Common_Movement_FacePlayer
+	waitmovement 0
+	msgbox SootopolisCity_EventScript_RivalGiveStarter, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SootopolisCity_EventScript_RivalGiveStarterNo
+	switch VAR_STARTER_MON
+	case 0, SootopolisCity_EventScript_StarterEgg2Torchic
+	case 1, SootopolisCity_EventScript_StarterEgg2Mudkip
+	case 2, SootopolisCity_EventScript_StarterEgg2Treecko
+	end
+
+SootopolisCity_EventScript_StarterEgg2Treecko::
+	bufferspeciesname STR_VAR_1, SPECIES_TREECKO
+	setvar VAR_TEMP_1, SPECIES_TREECKO
+	givemon SPECIES_TREECKO, 5, ITEM_NONE, ITEM_POKE_BALL, NATURE_MODEST, 2, MON_GENDERLESS, 0, 0, 0, 252, 252, 6, 31, 32, 31, 31, 31, 31, MOVE_GRASS_PLEDGE, MOVE_SWIFT, MOVE_DRAGON_PULSE, MOVE_SYNTHESIS
+	goto_if_eq VAR_RESULT, 0, SootopolisCity_EventScript_RivalStarterParty
+	goto_if_eq VAR_RESULT, 1, SootopolisCity_EventScript_RivalStarterPC
+	goto Common_EventScript_NoMoreRoomForPokemon
+	end
+
+SootopolisCity_EventScript_StarterEgg2Torchic::
+	bufferspeciesname STR_VAR_1, SPECIES_TORCHIC
+	setvar VAR_TEMP_1, SPECIES_TORCHIC
+	givemon SPECIES_TORCHIC, 5, ITEM_NONE, ITEM_POKE_BALL, NATURE_ADAMANT, 2, MON_GENDERLESS, 0, 252, 0, 252, 0, 6, 31, 31, 31, 31, 32, 31, MOVE_FIRE_PLEDGE, MOVE_ROCK_SLIDE, MOVE_BODY_SLAM, MOVE_SHADOW_CLAW
+	goto_if_eq VAR_RESULT, 0, SootopolisCity_EventScript_RivalStarterParty
+	goto_if_eq VAR_RESULT, 1, SootopolisCity_EventScript_RivalStarterPC
+	goto Common_EventScript_NoMoreRoomForPokemon
+	end
+
+SootopolisCity_EventScript_StarterEgg2Mudkip::
+	bufferspeciesname STR_VAR_1, SPECIES_MUDKIP
+	setvar VAR_TEMP_1, SPECIES_MUDKIP
+	givemon SPECIES_MUDKIP, 5, ITEM_NONE, ITEM_POKE_BALL, NATURE_JOLLY, 2, MON_GENDERLESS, 0, 252, 0, 252, 0, 6, 31, 31, 31, 31, 32, 31, MOVE_WATER_PLEDGE, MOVE_AVALANCHE, MOVE_LIQUIDATION, MOVE_DOUBLE_EDGE
+	goto_if_eq VAR_RESULT, 0, SootopolisCity_EventScript_RivalStarterParty
+	goto_if_eq VAR_RESULT, 1, SootopolisCity_EventScript_RivalStarterPC
+	goto Common_EventScript_NoMoreRoomForPokemon
+	end
+
+SootopolisCity_EventScript_RivalStarterParty::
+	call SootopolisCity_EventScript_RivalStarterFanfare
+	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SootopolisCity_EventScript_RivalSaysGoodbye
+	call Common_EventScript_GetGiftMonPartySlot
+	call Common_EventScript_NameReceivedPartyMon
+	goto SootopolisCity_EventScript_RivalSaysGoodbye
+	end
+
+SootopolisCity_EventScript_RivalStarterPC::
+	call SootopolisCity_EventScript_RivalStarterFanfare
+	msgbox gText_NicknameThisPokemon, MSGBOX_YESNO
+	goto_if_eq VAR_RESULT, NO, SootopolisCity_EventScript_SendRivalStarterToPC
+	call Common_EventScript_NameReceivedBoxMon
+	goto SootopolisCity_EventScript_SendRivalStarterToPC
+	end
+
+SootopolisCity_EventScript_SendRivalStarterToPC::
+	call Common_EventScript_TransferredToPC
+	goto SootopolisCity_EventScript_RivalSaysGoodbye
+	end
+
+
+SootopolisCity_EventScript_RivalStarterFanfare::
+	playfanfare MUS_OBTAIN_ITEM
+	message SootopolisCity_Text_PlayerRecievedRivalStarter
+	waitmessage
+	waitfanfare
+	return
+
+SootopolisCity_EventScript_RivalSaysGoodbye::
+	msgbox SootopolisCity_Text_RivalGoodbye, MSGBOX_DEFAULT
+	closemessage
+	applymovement LOCALID_RIVAL, Common_Movement_WalkInPlaceFasterDown
+	waitmovement 0
+	delay 50
+	setfieldeffectargument 0, 1
+	dofieldeffect FLDEFF_NPCFLY_OUT
+	delay 15
+	removeobject LOCALID_RIVAL
+	waitfieldeffect FLDEFF_NPCFLY_OUT
+	setflag FLAG_RECEIVED_SOOTOPOLIS_RIVAL_STARTER
+	releaseall
+	end
+
+SootopolisCity_EventScript_RivalGiveStarterNo::
+	msgbox SootopolisCity_Text_RivalBeHere, MSGBOX_DEFAULT
+	releaseall
+	end
+
+SootopolisCity_EventScript_NoMoreRoomForPokemon::
+	msgbox gText_NoMoreRoomForPokemon, MSGBOX_DEFAULT
+	releaseall
+	end
+
 @ Unused
 SootopolisCity_Movement_Levitate::
 	levitate
@@ -1725,3 +1828,34 @@ SootopolisCity_Text_DazzledByMentor:
 	.string "WALLACE: I'm sure that you will be\n"
 	.string "dazzled by my mentor's breathtakingly\l"
 	.string "elegant battle style.$"
+
+SootopolisCity_EventScript_RivalGoodToSeeYou:
+	.string "{RIVAL}: Oh, hi, {PLAYER}{KUN}!\p"
+	.string "What brings you back to\n"
+	.string "SOOTOPOLIS CITY?\p"
+	.string "I heard it's a good place to go\n"
+	.string "stargazing, since the night sky\l"
+	.string "is so clear.$"
+
+SootopolisCity_EventScript_RivalLotHasHappened:
+	.string "A lot sure has happened since\n"
+	.string "we started our adventure, huh?\p"
+	.string "It feels like so long ago now.$"
+
+SootopolisCity_EventScript_RivalGiveStarter:
+	.string "Remember the partner POKéMON that\n"
+	.string "I started my adventure with?\p"
+	.string "Would you like one like it?$"
+	
+SootopolisCity_Text_RivalGoodbye:
+	.string "Take good care of it for me, okay?\p"
+	.string "I think I'll keep working on my\n"
+	.string "POKéDEX for now.\p"
+	.string "See you later, {PLAYER}{KUN}!$"
+
+SootopolisCity_Text_PlayerRecievedRivalStarter:
+	.string "{PLAYER} received {STR_VAR_1}!$"
+
+SootopolisCity_Text_RivalBeHere:
+	.string "Oh. Well, I'll be here if you\n"
+	.string "ever change your mind.$"

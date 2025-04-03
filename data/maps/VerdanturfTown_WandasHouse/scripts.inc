@@ -18,9 +18,18 @@ VerdanturfTown_WandasHouse_EventScript_WallyShortSpeech::
 VerdanturfTown_WandasHouse_EventScript_WallysUncle::
 	lock
 	faceplayer
+	goto_if_unset FLAG_UNCLE_GIVEN_DAWN_STONE, VerdanturfTown_WandasHouse_EventScript_WallysUncleDawnStone
 	goto_if_set FLAG_DEFEATED_WALLY_VICTORY_ROAD, VerdanturfTown_WandasHouse_EventScript_WallysUncleEverGrande
 	goto_if_set FLAG_DEFEATED_LAVARIDGE_GYM, VerdanturfTown_WandasHouse_EventScript_WallysUncleSlippedOff
 	msgbox VerdanturfTown_WandasHouse_Text_WallysNextDoor, MSGBOX_DEFAULT
+	release
+	end
+
+VerdanturfTown_WandasHouse_EventScript_WallysUncleDawnStone::
+	msgbox VerdanturfTown_WandasHouse_Text_WallyWantedYou, MSGBOX_DEFAULT	
+	giveitem ITEM_DAWN_STONE
+	goto_if_eq VAR_RESULT, FALSE, Common_EventScript_ShowBagIsFull
+	setflag FLAG_UNCLE_GIVEN_DAWN_STONE
 	release
 	end
 
@@ -81,6 +90,12 @@ VerdanturfTown_WandasHouse_EventScript_WallysAuntEverGrande::
 	msgbox VerdanturfTown_WandasHouse_Text_WallyWasInEverGrande, MSGBOX_DEFAULT
 	release
 	end
+
+VerdanturfTown_WandasHouse_Text_WallyWantedYou:
+	.string "UNCLE: Ah! {PLAYER}{KUN}!\n"
+	.string "WALLY wanted you to have this.\p"
+	.string "He thought you might be able\n"
+	.string "to use it.$"
 
 VerdanturfTown_WandasHouse_Text_StrongerSpeech:
 	.string "WALLY: I lost to you, {PLAYER}, but I'm\n"

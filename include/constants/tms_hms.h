@@ -2,9 +2,9 @@
 #define GUARD_CONSTANTS_TMS_HMS_H
 
 #define FOREACH_TM(F) \
-    F(FOCUS_PUNCH) \
+    F(HONE_CLAWS) \
     F(DRAGON_CLAW) \
-    F(WATER_PULSE) \
+    F(PSYSHOCK) \
     F(CALM_MIND) \
     F(ROAR) \
     F(TOXIC) \
@@ -22,13 +22,13 @@
     F(RAIN_DANCE) \
     F(GIGA_DRAIN) \
     F(SAFEGUARD) \
-    F(FRUSTRATION) \
+    F(DAZZLING_GLEAM) \
     F(SOLAR_BEAM) \
-    F(IRON_TAIL) \
+    F(IRON_HEAD) \
     F(THUNDERBOLT) \
     F(THUNDER) \
     F(EARTHQUAKE) \
-    F(RETURN) \
+    F(LOW_SWEEP) \
     F(DIG) \
     F(PSYCHIC) \
     F(SHADOW_BALL) \
@@ -50,8 +50,58 @@
     F(THIEF) \
     F(STEEL_WING) \
     F(SKILL_SWAP) \
-    F(SNATCH) \
-    F(OVERHEAT)
+    F(SCALD) \
+    F(OVERHEAT) \
+    F(ROOST) \
+    F(FOCUS_BLAST) \
+    F(ENERGY_BALL) \
+    F(FALSE_SWIPE) \
+    F(BRINE) \
+    F(FLING) \
+    F(CHARGE_BEAM) \
+    F(SMACK_DOWN) \
+    F(DRAGON_PULSE) \
+    F(DRAIN_PUNCH) \
+    F(WILL_O_WISP) \
+    F(BUG_BUZZ) \
+    F(NASTY_PLOT) \
+    F(BODY_PRESS) \
+    F(SHADOW_CLAW) \
+    F(PAYBACK) \
+    F(RECYCLE) \
+    F(GIGA_IMPACT) \
+    F(ROCK_POLISH) \
+    F(DEFOG) \
+    F(STONE_EDGE) \
+    F(AVALANCHE) \
+    F(THUNDER_WAVE) \
+    F(GYRO_BALL) \
+    F(SWORDS_DANCE) \
+    F(STEALTH_ROCK) \
+    F(DRAGON_DANCE) \
+    F(SNARL) \
+    F(DARK_PULSE) \
+    F(ROCK_SLIDE) \
+    F(X_SCISSOR) \
+    F(ACROBATICS) \
+    F(BULLDOZE) \
+    F(POISON_JAB) \
+    F(ROCK_CLIMB) \
+    F(GRASS_KNOT) \
+    F(POWER_UP_PUNCH) \
+    F(PLUCK) \
+    F(U_TURN) \
+    F(NATURE_POWER) \
+    F(FLASH_CANNON) \
+    F(TRICK_ROOM) \
+    F(AIR_SLASH) \
+    F(EARTH_POWER) \
+    F(LEECH_LIFE) \
+    F(PLAY_ROUGH) \
+    F(SEED_BOMB) \
+    F(THROAT_CHOP) \
+    F(ZEN_HEADBUTT) \
+    F(WILD_CHARGE)
 
 #define FOREACH_HM(F) \
     F(CUT) \

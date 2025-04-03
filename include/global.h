@@ -199,6 +199,12 @@ struct Time
     /*0x04*/ s8 seconds;
 };
 
+struct ItemSlot //Repositioned
+{
+    u16 itemId;
+    u16 quantity;
+};
+
 #include "constants/items.h"
 #define ITEM_FLAGS_COUNT ((ITEMS_COUNT / 8) + ((ITEMS_COUNT % 8) ? 1 : 0))
 
@@ -210,6 +216,8 @@ struct SaveBlock3
 #if OW_SHOW_ITEM_DESCRIPTIONS == OW_ITEM_DESCRIPTIONS_FIRST_TIME
     u8 itemFlags[ITEM_FLAGS_COUNT];
 #endif
+    struct ItemSlot pcItems[PC_ITEMS_COUNT]; //Moved from SaveBlock1
+
 #if USE_DEXNAV_SEARCH_LEVELS == TRUE
     u8 dexNavSearchLevels[NUM_SPECIES];
 #endif
@@ -613,11 +621,11 @@ struct WarpData
     s16 x, y;
 };
 
-struct ItemSlot
+/*struct ItemSlot
 {
     u16 itemId;
     u16 quantity;
-};
+};*/
 
 struct Pokeblock
 {
@@ -1029,7 +1037,7 @@ struct SaveBlock1
     /*0x490*/ u32 money;
     /*0x494*/ u16 coins;
     /*0x496*/ u16 registeredItem; // registered for use with SELECT button
-    /*0x498*/ struct ItemSlot pcItems[PC_ITEMS_COUNT];
+//    /*0x498*/ struct ItemSlot pcItems[PC_ITEMS_COUNT];
     /*0x560*/ struct ItemSlot bagPocket_Items[BAG_ITEMS_COUNT];
     /*0x5D8*/ struct ItemSlot bagPocket_KeyItems[BAG_KEYITEMS_COUNT];
     /*0x650*/ struct ItemSlot bagPocket_PokeBalls[BAG_POKEBALLS_COUNT];
