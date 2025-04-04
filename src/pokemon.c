@@ -1336,10 +1336,9 @@ void CreateMaleMon(struct Pokemon *mon, u16 species, u8 level)
 
     do
     {
-        isShiny = TRUE;
+        isShiny = FALSE;
         otId = Random32();
-//        personality = Random32();
-        personality = GeneratePID(PID_NORMAL, FALSE);
+        personality = Random32();
         if ((GET_SHINY_VALUE(otId, personality)) < SHINY_ODDS)
             isShiny = TRUE;
     }
